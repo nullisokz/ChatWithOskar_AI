@@ -45,7 +45,8 @@ personality — friendly, thoughtful, a little fun.
   Response: { "reply": string }
   ```
 - Loads a **facts file** (see below) into the system prompt at request time.
-- Calls the Anthropic API (Claude Haiku model) server-side.
+- Calls the Google Gemini API (`gemini-2.5-flash`) server-side. (Plan originally called for
+  the Anthropic API; the implementation shipped with Gemini instead.)
   - API key stored in an environment variable, NEVER exposed to the frontend.
 - Basic guardrails:
   - Cap incoming message length (e.g. 500 chars)
@@ -76,7 +77,7 @@ personality — friendly, thoughtful, a little fun.
 |------------|--------------------------------------------|
 | Frontend   | React + Vite                              |
 | Backend    | Python (FastAPI)                          |
-| LLM        | Anthropic API — Claude Haiku model        |
+| LLM        | Google Gemini API — `gemini-2.5-flash`    |
 | Data       | Static facts file (md/json), no DB for v1 |
 | Hosting    | Local/Codespaces only for now (v1 test)   |
 

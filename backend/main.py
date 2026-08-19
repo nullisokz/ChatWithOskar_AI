@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 
@@ -5,8 +6,11 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from google import genai
+from google.genai import errors as genai_errors
 from google.genai import types
 from pydantic import BaseModel, Field
+
+logger = logging.getLogger("chat")
 
 load_dotenv()
 
@@ -88,7 +92,21 @@ def chat(req: ChatRequest) -> ChatResponse:
         ),
         history=history,
     )
-    response = chat_session.send_message(req.message)
+
+    try:
+        response = chat_session.send_message(req.message)
+    except genai_errors.APIError:
+        logger.exception("Gemini API call failed")
+        raise HTTPException(
+            status_code=502,
+            detail="Sorry, I'm having trouble responding right now. Please try again in a moment.",
+        )
+
+    if not response.text:
+        raise HTTPException(
+            status_code=502,
+            detail="Sorry, I'm having trouble responding right now. Please try again in a moment.",
+        )
 
     return ChatResponse(reply=response.text)
 

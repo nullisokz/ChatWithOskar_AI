@@ -69,6 +69,7 @@ export default function App() {
       const data = await res.json();
       setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
     } catch (err) {
+      console.error("Chat request failed:", err);
       setError("Something went wrong reaching Oskar. Please try again in a moment.");
     } finally {
       setLoading(false);

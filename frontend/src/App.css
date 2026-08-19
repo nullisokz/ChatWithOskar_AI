@@ -6,15 +6,16 @@
 .page {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  align-items: center;
   min-height: 100svh;
-  padding: 0 24px;
+  padding: 0 24px 40px;
   box-sizing: border-box;
 }
 
 .header {
+  width: 100%;
+  max-width: 640px;
   padding: 40px 0 24px;
-  border-bottom: 1px solid var(--border);
 }
 
 .header h1 {
@@ -31,11 +32,18 @@
 }
 
 .chat {
-  flex: 1;
+  width: 100%;
+  max-width: 640px;
+  height: min(640px, 70svh);
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  background: var(--bg);
+  box-shadow: var(--shadow);
 }
 
 .messages {
@@ -44,6 +52,7 @@
   flex-direction: column;
   gap: 12px;
   overflow-y: auto;
+  min-height: 0;
   padding-bottom: 16px;
 }
 
